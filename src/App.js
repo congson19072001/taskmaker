@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import { React, useState} from 'react'
+import { Layout } from 'antd';
 
+// adding pages
+import Home from "./pages/Home"
+import SignIn from "./pages/SignIn"
+import SignUp from "./pages/SignUp"
+import MindMap from "./pages/MindMap"
+import MyTasks from "./pages/MyTasks"
+import About from "./pages/About"
+
+// adding components
+import AppHeader from './component/Header'
+import AppFooter from './component/Footer'
+
+/** Todolist
+ *  Create routers            done
+ *  Create documents          done
+ *  Import components         done
+ *  Import Header and Footer  done
+ */
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout >
+      <Router>
+        <AppHeader />
+        <Route exact path='/' component={Home} />
+        <Route path='/signin' >
+          {localStorage.getItem("accessToken") ?  <Redirect to="/" /> : <SignIn />}
+        </Route>
+        <Route path='/signup' component={SignUp} />
+        <Route path='/mindmap' component={MindMap} />
+        <Route path='/mytasks' component={MyTasks} />
+        <Route path='/about' component={About} />
+      </Router>
+      <AppFooter />
+    </Layout>
   );
 }
 
